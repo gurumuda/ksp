@@ -15,14 +15,12 @@ $submenu = $uri->getSegment(2);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/fontawesome-free/css/all.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="/assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
-    <link href="https://unpkg.com/tabulator-tables@5.5.3/dist/css/tabulator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.3/dist/js/tabulator.min.js"></script>
+    <!-- Tabulator  -->
+    <link rel="stylesheet" href="/assets/tabulator/dist/css/tabulator_bootstrap4.css">
+    <!-- <link href="https://unpkg.com/tabulator-tables@5.5.3/dist/css/tabulator.min.css" rel="stylesheet"> -->
+    <!-- <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.3/dist/js/tabulator.min.js"></script> -->
 </head>
 
 <body class="layout-fixed text-sm layout-navbar-fixed" id="awak">
@@ -719,19 +717,9 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="/assets/datatables/jquery.dataTables.min.js"></script>
-    <script src="/assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/assets/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/assets/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/assets/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="/assets/jszip/jszip.min.js"></script>
-    <script src="/assets/pdfmake/pdfmake.min.js"></script>
-    <script src="/assets/pdfmake/vfs_fonts.js"></script>
-    <script src="/assets/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="/assets/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="/assets/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Tabulator  -->
+    <script src="/assets/tabulator/dist/js/tabulator.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="/assets/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
@@ -750,21 +738,15 @@ $submenu = $uri->getSegment(2);
             }
         })
     </script>
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example3').DataTable({
-                stateSave: true
-            });
-        });
-    </script>
+
 
     <script>
+        var valueEl = document.getElementById("filter-value");
+
+        function updateFilter() {
+            table.setFilter("nama", "like", valueEl.value);
+        }
+        document.getElementById("filter-value").addEventListener("keyup", updateFilter);
         var table = new Tabulator("#example2", {
             layout: "fitColumns",
             pagination: "local",
@@ -772,13 +754,11 @@ $submenu = $uri->getSegment(2);
             paginationSizeSelector: [5, 10, 15, 20, 25],
             movableColumns: true,
             paginationCounter: "rows",
-
             columns: [{
-                    title: "Nama",
-                    headerFilter: true,
-                    headerFilterPlaceholder: "Pencarian"
-                } //set placeholder text on name column header filter
-            ]
+                title: "Nama",
+                field: "nama",
+                width: 200
+            }, ]
         });
     </script>
 </body>
