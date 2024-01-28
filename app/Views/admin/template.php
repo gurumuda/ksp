@@ -17,10 +17,16 @@ $submenu = $uri->getSegment(2);
     <link rel="stylesheet" href="/assets/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
-    <!-- Tabulator  -->
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Tabulator -->
     <link rel="stylesheet" href="/assets/tabulator/dist/css/tabulator_bootstrap4.css">
-    <!-- <link href="https://unpkg.com/tabulator-tables@5.5.3/dist/css/tabulator.min.css" rel="stylesheet"> -->
-    <!-- <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.3/dist/js/tabulator.min.js"></script> -->
+    <!-- Toast -->
+    <link rel="stylesheet" href="/assets/toastr/toastr.min.css">
 </head>
 
 <body class="layout-fixed text-sm layout-navbar-fixed" id="awak">
@@ -717,14 +723,31 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="/assets/sweetalert2/sweetalert2.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/assets/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/jszip/jszip.min.js"></script>
+    <script src="/assets/pdfmake/pdfmake.min.js"></script>
+    <script src="/assets/pdfmake/vfs_fonts.js"></script>
+    <script src="/assets/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Tabulator  -->
     <script src="/assets/tabulator/dist/js/tabulator.min.js"></script>
-
+    <!-- Toast -->
+    <script src="/assets/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/assets/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/assets/dist/js/demo.js"></script>
     <!-- Page specific script -->
+    <script src="/assets/js-app/admin-page.js"></script>
     <script>
         var gaya = localStorage.getItem("gaya");
         if (gaya) {
@@ -739,28 +762,16 @@ $submenu = $uri->getSegment(2);
         })
     </script>
 
-
     <script>
-        var valueEl = document.getElementById("filter-value");
-
-        function updateFilter() {
-            table.setFilter("nama", "like", valueEl.value);
-        }
-        document.getElementById("filter-value").addEventListener("keyup", updateFilter);
-        var table = new Tabulator("#example2", {
-            layout: "fitColumns",
-            pagination: "local",
-            paginationSize: 10,
-            paginationSizeSelector: [5, 10, 15, 20, 25],
-            movableColumns: true,
-            paginationCounter: "rows",
-            columns: [{
-                title: "Nama",
-                field: "nama",
-                width: 200
-            }, ]
+        $(function() {
+            $('#example2').DataTable({
+                stateSave: true
+            });
         });
     </script>
+
+
+
 </body>
 
 </html>
