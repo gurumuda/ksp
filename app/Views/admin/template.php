@@ -165,8 +165,8 @@ $submenu = $uri->getSegment(2);
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item <?= ($submenu == 'koperasi' || $submenu == 'anggota') ? 'menu-open' : ''; ?>">
-                            <a href="#" class="nav-link <?= ($submenu == 'koperasi' || $submenu == 'anggota') ? 'active' : ''; ?>">
+                        <li class="nav-item <?= ($submenu == 'koperasi' || $submenu == 'anggota' || $submenu == 'jenistransaksi') ? 'menu-open' : ''; ?>">
+                            <a href="#" class="nav-link <?= ($submenu == 'koperasi' || $submenu == 'anggota' || $submenu == 'jenistransaksi') ? 'active' : ''; ?>">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Data
@@ -185,6 +185,12 @@ $submenu = $uri->getSegment(2);
                                     <a href="/admin/anggota" class="nav-link <?= ($submenu == 'anggota') ? 'active' : ''; ?>">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Data Anggota</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/jenistransaksi" class="nav-link <?= ($submenu == 'jenistransaksi') ? 'active' : ''; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Jenis Transaksi</p>
                                     </a>
                                 </li>
                             </ul>
@@ -738,8 +744,8 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/assets/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/assets/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Tabulator  -->
-    <script src="/assets/tabulator/dist/js/tabulator.min.js"></script>
+    <!-- bs-custom-file-input -->
+    <script src="/assets/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Toast -->
     <script src="/assets/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
@@ -748,6 +754,22 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/dist/js/demo.js"></script>
     <!-- Page specific script -->
     <script src="/assets/js-app/admin-page.js"></script>
+    <?php if (session()->getFlashdata('error')) : ?>
+        <script>
+            toastr.error("<?= session()->getFlashdata('error'); ?>");
+        </script>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('success')) : ?>
+        <script>
+            toastr.success("<?= session()->getFlashdata('success'); ?>");
+        </script>
+    <?php endif; ?>
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
     <script>
         var gaya = localStorage.getItem("gaya");
         if (gaya) {

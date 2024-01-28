@@ -29,7 +29,7 @@
                             <h3 class="card-title">Data Anggota Koperasi</h3>
                             <div class="card-tools">
                                 <button type="button" data-toggle="modal" data-target="#modal-tambah" class="btn btn-xs btn-outline-info"><i class="fas fa-plus"></i> Tambah Data</button>
-                                <button type="button" class="btn btn-xs btn-outline-success"><i class="fas fa-upload"></i> Import Data</button>
+                                <button type="button" data-toggle="modal" data-target="#modal-import" class="btn btn-xs btn-outline-success"><i class="fas fa-upload"></i> Import Data</button>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -78,7 +78,7 @@
     <!-- /.content -->
 </div>
 
-<div class="modal fade" id="modal-tambah">
+<div class="modal fade reloadpage" id="modal-tambah">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -151,11 +151,11 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-ubah">
+<div class="modal fade reloadpage" id="modal-ubah">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Anggota</h4>
+                <h4 class="modal-title">Ubah Data Anggota</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -219,6 +219,43 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 <button type="button" id="btn-ubah-anggota" class="btn btn-primary">Simpan Data</button>
             </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal-import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Data Anggota</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <?= form_open_multipart('/tambah/importAnggota'); ?>
+            <div class="modal-body">
+                <div class="form-group row pb-3" style="border-bottom: 2px solid #757575;">
+                    <label class="col-6" for="">Download Format Import</label>
+                    <div class="form-input col-6">
+                        <a class="btn btn-sm btn-primary" href="/admin/download/Anggota">Donwload</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customFile">Pilih File Format Import</label>
+                    <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Import Data</button>
+            </div>
+            <?= form_close(); ?>
         </div>
         <!-- /.modal-content -->
     </div>

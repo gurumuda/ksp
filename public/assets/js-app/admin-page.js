@@ -1,10 +1,10 @@
 // tutup modal bootstrap
-$(".modal").on("hide.bs.modal", function (event) {
+$(".reloadpage").on("hide.bs.modal", function (event) {
   window.location.reload();
 });
 
 // tambah data anggota
-$(".btn-tambah-anggota").on("click", function () {
+$("#btn-tambah-anggota").on("click", function () {
   username = $("#username").val();
   password = $("#password").val();
   nama = $("#nama").val();
@@ -158,6 +158,49 @@ $("#btn-ubah-anggota").on("click", function () {
       }
       if (data == "2") {
         toastr.error("Data anggota gagal diubah, ada duplikasi username.");
+      }
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+// tambah data anggota
+$("#btn-tambah-jenistransaksi").on("click", function () {
+  kode_trx = $("#kode_trx").val();
+  nama_trx = $("#nama_trx").val();
+  jenis_trx = $("#jenis_trx").val();
+  periode_trx = $("#periode_trx").val();
+  nominal_trx = $("#nominal_trx").val();
+
+  if (!(kode_trx && nama_trx && jenis_trx && periode_trx)) {
+    toastr.error("Data anggota gagal ditambah, data tidak lengkap.");
+    return false;
+  }
+  $.ajax({
+    url: "/tambah/jenistransaksi",
+    type: "POST",
+    headers: { "X-Requested-With": "XMLHttpRequest" },
+    data: {
+      kode_trx,
+      nama_trx,
+      jenis_trx,
+      periode_trx,
+      nominal_trx,
+    },
+    success: function (data) {
+      //   console.log(data);
+      if (data == "1") {
+        toastr.success("Data transaksi berhasil ditambah.");
+      }
+      if (data == "0") {
+        toastr.error("Data transaksi gagal ditambah, ada kesalahan sistem.");
+      }
+      if (data == "2") {
+        toastr.error(
+          "Data transaksi gagal ditambah, ada duplikasi kode transaksi."
+        );
       }
     },
     error: function (e) {
