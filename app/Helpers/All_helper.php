@@ -29,3 +29,21 @@ function jenistrx($jns)
             break;
     }
 }
+
+function periodetrx($per)
+{
+    switch ($per) {
+        case '1':
+            echo 'Satu Kali';
+            break;
+        case '2':
+            echo 'Bulanan';
+            break;
+        case '3':
+            echo 'Insiden';
+            break;
+        default:
+            echo 'Tidak diketahui';
+            break;
+    }
+}

@@ -41,6 +41,7 @@
                                         <th>Kode Transaksi</th>
                                         <th>Nama Transaksi</th>
                                         <th>Jenis Transaksi</th>
+                                        <th>Periode</th>
                                         <th>Nominal</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -52,7 +53,8 @@
                                             <td><?= $no++; ?></td>
                                             <td><?= $tr->kode_trx; ?></td>
                                             <td><?= $tr->nama_trx; ?></td>
-                                            <td><?= jenistrx($tr->jenis_trx); ?></td>
+                                            <td><?= jenistrx($tr->periode_trx); ?></td>
+                                            <td><?= periodetrx($tr->jenis_trx); ?></td>
                                             <td><?= ($tr->nominal_trx != 0) ? 'Rp. ' . number_format($tr->nominal_trx, 0, ',', '.') : 'Disesuaikan'; ?></td>
                                             <td>
                                                 <button data-id="<?= $tr->jenistransaksi_id; ?>" data-nama="<?= $tr->nama_trx; ?>" class="btn btn-xs btn-outline-warning btn-ubah-jenistransaksi"><i class="fas fa-edit"></i></button>

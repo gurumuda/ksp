@@ -43,8 +43,25 @@ class Admin extends BaseController
 
     public function debet()
     {
+        $bulan = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
+        ];
+        $jenistransaksi = $this->jenistr->where(['periode_trx !=' => 1, 'jenis_trx' => 1])->findAll();
         $data = [
-            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll()
+            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll(),
+            'bulan' => $bulan,
+            'jenistransaksi' => $jenistransaksi
         ];
         return view('admin/debet', $data);
     }
