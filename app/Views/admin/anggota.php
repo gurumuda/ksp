@@ -39,7 +39,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Jenis Kelamin</th>
+                                        <th nowrap>Jenis Kelamin</th>
                                         <th>Alamat</th>
                                         <th>HP</th>
                                         <th>Opsi</th>
@@ -50,11 +50,11 @@
                                     foreach ($anggota as $agt) : ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $agt->nama; ?></td>
+                                            <td nowrap><?= $agt->nama; ?></td>
                                             <td><?= jk($agt->jenis_kelamin); ?></td>
                                             <td><?= $agt->alamat; ?></td>
-                                            <td><?= $agt->no_hp; ?></td>
-                                            <td>
+                                            <td nowrap><?= $agt->no_hp; ?></td>
+                                            <td nowrap>
                                                 <button data-id="<?= $agt->anggota_id; ?>" data-nama="<?= $agt->nama; ?>" class="btn btn-xs btn-outline-warning btn-ubah-anggota"><i class="fas fa-edit"></i></button>
                                                 <button data-id="<?= $agt->anggota_id; ?>" data-nama="<?= $agt->nama; ?>" class="btn btn-xs btn-outline-danger btn-hapus-anggota"><i class="fas fa-trash"></i></button>
                                             </td>

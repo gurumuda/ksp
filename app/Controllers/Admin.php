@@ -5,17 +5,9 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-use App\Models\Anggota;
-use App\Models\Jenistransaksi;
 
 class Admin extends BaseController
 {
-
-    public function __construct()
-    {
-        $this->anggota = new Anggota();
-        $this->jenistr = new Jenistransaksi();
-    }
 
     public function index()
     {
@@ -29,10 +21,8 @@ class Admin extends BaseController
 
     public function anggota()
     {
-        helper('All_helper');
-
         $data = [
-            'anggota' => $this->anggota->findAll()
+            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll()
         ];
         return view('admin/anggota', $data);
     }
@@ -46,8 +36,16 @@ class Admin extends BaseController
     public function jenistransaksi()
     {
         $data = [
-            'jenis_tr' => $this->jenistr->findAll()
+            'jenis_tr' => $this->jenistr->orderBy('jenis_trx', 'ASC')->findAll()
         ];
         return view('admin/data-transaksi', $data);
+    }
+
+    public function debet()
+    {
+        $data = [
+            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll()
+        ];
+        return view('admin/debet', $data);
     }
 }

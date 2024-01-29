@@ -14,3 +14,18 @@ function jk($jk)
             break;
     }
 }
+
+function jenistrx($jns)
+{
+    switch ($jns) {
+        case '1':
+            echo 'Debet';
+            break;
+        case '2':
+            echo 'Kredit';
+            break;
+        default:
+            echo 'Tidak diketahui';
+            break;
+    }
+}

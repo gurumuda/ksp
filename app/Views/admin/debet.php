@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Transaksi</h1>
+                    <h1>Debet</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item active">Jenis Transaksi</li>
+                        <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+                        <li class="breadcrumb-item active">Debet</li>
                     </ol>
                 </div>
             </div>
@@ -23,45 +23,42 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Data Jenis Transaksi</h3>
-                            <div class="card-tools">
-                                <button type="button" data-toggle="modal" data-target="#modal-tambah" class="btn btn-xs btn-outline-info"><i class="fas fa-plus"></i> Tambah Data</button>
-                                <button type="button" data-toggle="modal" data-target="#modal-import" class="btn btn-xs btn-outline-success"><i class="fas fa-upload"></i> Import Data</button>
-                            </div>
+                            <h3 class="card-title">Data Anggota</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover table-sm mt-1">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Kode Transaksi</th>
-                                        <th>Nama Transaksi</th>
-                                        <th>Jenis Transaksi</th>
-                                        <th>Nominal</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $no = 1;
-                                    foreach ($jenis_tr as $tr) : ?>
-                                        <tr>
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $tr->kode_trx; ?></td>
-                                            <td><?= $tr->nama_trx; ?></td>
-                                            <td><?= jenistrx($tr->jenis_trx); ?></td>
-                                            <td><?= ($tr->nominal_trx != 0) ? 'Rp. ' . number_format($tr->nominal_trx, 0, ',', '.') : 'Disesuaikan'; ?></td>
-                                            <td>
-                                                <button data-id="<?= $tr->jenistransaksi_id; ?>" data-nama="<?= $tr->nama_trx; ?>" class="btn btn-xs btn-outline-warning btn-ubah-jenistransaksi"><i class="fas fa-edit"></i></button>
-                                                <button data-id="<?= $tr->jenistransaksi_id; ?>" data-nama="<?= $tr->nama_trx; ?>" class="btn btn-xs btn-outline-danger btn-hapus-jenistransaksi"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-
+                            <div class="form-group row">
+                                <label for="dataAnggotaKoperasi" class="col-12 col-sm-3">Pilih</label>
+                                <div class="form-input col-12 col-sm-9">
+                                    <select name="dataAnggotaKoperasi" id="dataAnggotaKoperasi" class="form-control select2" style="width: 100%;">
+                                        <option value="">-- Pilih Nama Anggota --</option>
+                                        <?php foreach ($anggota as $agt) : ?>
+                                            <option value="<?= $agt->anggota_id; ?>"><?= $agt->nama; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-3 mt-2 pl-3 pb-3 pr-3" id="tampil-data-anggota" style="display: none; border-top: 1px solid #D7D7D7">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <th style="vertical-align: top; width:90px">Nama</th>
+                                    <td style="vertical-align: top; width: 20px;">:</td>
+                                    <td style="vertical-align: top"><span id="tampil-nama"></span></td>
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: top; width:90px">No HP</th>
+                                    <td style="vertical-align: top; width: 20px;">:</td>
+                                    <td style="vertical-align: top"><span id="tampil-no_hp"></span></td>
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: top; width:90px">Alamat</th>
+                                    <td style="vertical-align: top; width: 20px;">:</td>
+                                    <td style="vertical-align: top"><span id="tampil-alamat"></span></td>
+                                </tr>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -70,6 +67,20 @@
 
                 </div>
                 <!-- /.col -->
+                <div class="col-md-6 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Data Transaksi</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                </div>
             </div>
             <!-- /.row -->
         </div>

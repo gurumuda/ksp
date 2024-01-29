@@ -15,18 +15,19 @@ $submenu = $uri->getSegment(2);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/assets/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="/assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="/assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <!-- Tabulator -->
-    <link rel="stylesheet" href="/assets/tabulator/dist/css/tabulator_bootstrap4.css">
     <!-- Toast -->
     <link rel="stylesheet" href="/assets/toastr/toastr.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
 </head>
 
 <body class="layout-fixed text-sm layout-navbar-fixed" id="awak">
@@ -154,7 +155,7 @@ $submenu = $uri->getSegment(2);
             <div class="sidebar">
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
@@ -194,6 +195,14 @@ $submenu = $uri->getSegment(2);
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item <?= ($submenu == 'debet') ? 'active' : ''; ?>">
+                            <a href="/admin/debet" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Transaksi Debet
+                                </p>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -729,6 +738,8 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Select2 -->
+    <script src="/assets/select2/js/select2.full.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="/assets/sweetalert2/sweetalert2.min.js"></script>
     <!-- DataTables  & Plugins -->
@@ -754,6 +765,11 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/dist/js/demo.js"></script>
     <!-- Page specific script -->
     <script src="/assets/js-app/admin-page.js"></script>
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+    </script>
     <?php if (session()->getFlashdata('error')) : ?>
         <script>
             toastr.error("<?= session()->getFlashdata('error'); ?>");
@@ -791,9 +807,6 @@ $submenu = $uri->getSegment(2);
             });
         });
     </script>
-
-
-
 </body>
 
 </html>

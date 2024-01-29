@@ -5,19 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-use App\Models\Anggota;
-use App\Models\Jenistransaksi;
-
-
 class Tambah extends BaseController
 {
-
-    public function __construct()
-    {
-        $this->anggota = new Anggota();
-        $this->jenistr = new Jenistransaksi();
-    }
-
     public function anggota()
     {
         $username = $this->request->getPost('username');
@@ -121,14 +110,12 @@ class Tambah extends BaseController
         $kode_trx = $this->request->getPost('kode_trx');
         $nama_trx = $this->request->getPost('nama_trx');
         $jenis_trx = $this->request->getPost('jenis_trx');
-        $periode_trx = $this->request->getPost('periode_trx');
         $nominal_trx = $this->request->getPost('nominal_trx');
 
         $data = [
             'kode_trx' => $kode_trx,
             'nama_trx' => $nama_trx,
             'jenis_trx' => $jenis_trx,
-            'periode_trx' => $periode_trx,
             'nominal_trx' => $nominal_trx,
         ];
 

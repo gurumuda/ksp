@@ -25,9 +25,6 @@ class Jenistransaksi extends Migration
             'jenis_trx' => [
                 'type'       => 'ENUM("1","2")',
             ],
-            'periode_trx' => [
-                'type'       => 'ENUM("1","2","3","4")',
-            ],
             'nominal_trx' => [
                 'type' => 'FLOAT',
             ],
