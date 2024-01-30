@@ -62,12 +62,14 @@ class Ubah extends BaseController
         $kode_trx = $this->request->getPost('kode_trx');
         $nama_trx = $this->request->getPost('nama_trx');
         $jenis_trx = $this->request->getPost('jenis_trx');
+        $periode_trx = $this->request->getPost('periode_trx');
         $nominal_trx = $this->request->getPost('nominal_trx');
 
         $data = [
             'jenistransaksi_id' => $jenistransaksi_id,
             'kode_trx' => $kode_trx,
             'nama_trx' => $nama_trx,
+            'periode_trx' => $periode_trx,
             'jenis_trx' => $jenis_trx,
             'nominal_trx' => $nominal_trx,
         ];

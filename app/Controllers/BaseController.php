@@ -56,5 +56,7 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         $this->anggota = new \App\Models\Anggota();
         $this->jenistr = new \App\Models\Jenistransaksi();
+        $this->transaksi = new \App\Models\Transaksi();
+        $this->pinjaman = new \App\Models\Pinjaman();
     }
 }

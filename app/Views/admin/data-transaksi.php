@@ -53,8 +53,8 @@
                                             <td><?= $no++; ?></td>
                                             <td><?= $tr->kode_trx; ?></td>
                                             <td><?= $tr->nama_trx; ?></td>
-                                            <td><?= jenistrx($tr->periode_trx); ?></td>
-                                            <td><?= periodetrx($tr->jenis_trx); ?></td>
+                                            <td><?= jenistrx($tr->jenis_trx); ?></td>
+                                            <td><?= periodetrx($tr->periode_trx); ?></td>
                                             <td><?= ($tr->nominal_trx != 0) ? 'Rp. ' . number_format($tr->nominal_trx, 0, ',', '.') : 'Disesuaikan'; ?></td>
                                             <td>
                                                 <button data-id="<?= $tr->jenistransaksi_id; ?>" data-nama="<?= $tr->nama_trx; ?>" class="btn btn-xs btn-outline-warning btn-ubah-jenistransaksi"><i class="fas fa-edit"></i></button>
@@ -100,6 +100,17 @@
                     <label for="nama_trx" class="col-sm-4 col-form-label">Nama Transaksi</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="nama_trx" placeholder="Nama Transaksi">
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="periode_trx" class="col-sm-4 col-form-label">Periode Transaksi</label>
+                    <div class="col-sm-8">
+                        <select id="periode_trx" class="form-control">
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Satu kali</option>
+                            <option value="2">Bulanan</option>
+                            <option value="3">Insidental (sesuai keadaan)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
@@ -151,6 +162,17 @@
                     <label for="ubah_nama_trx" class="col-sm-4 col-form-label">Nama Transaksi</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="ubah_nama_trx" placeholder="Nama Transaksi">
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="ubah_periode_trx" class="col-sm-4 col-form-label">Periode Transaksi</label>
+                    <div class="col-sm-8">
+                        <select id="ubah_periode_trx" class="form-control">
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Satu kali</option>
+                            <option value="2">Bulanan</option>
+                            <option value="3">Insidental (sesuai keadaan)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row mb-1">

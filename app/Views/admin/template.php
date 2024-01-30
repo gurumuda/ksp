@@ -808,7 +808,7 @@ $submenu = $uri->getSegment(2);
         });
     </script>
 
-    <script>
+    <!-- <script>
         // Input Mask
         /* Dengan Rupiah */
         var dr = document.getElementsByClassName("dengan-rupiah");
@@ -835,7 +835,7 @@ $submenu = $uri->getSegment(2);
             rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
             return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
         }
-    </script>
+    </script> -->
 </body>
 
 </html>

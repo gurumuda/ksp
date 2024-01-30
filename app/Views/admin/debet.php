@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-3 mt-2 pl-3 pb-3 pr-3" id="tampil-data-anggota" style="display: block; border-top: 1px solid #D7D7D7">
+                        <div class="pt-3 mt-2 pl-3 pb-3 pr-3" id="tampil-data-anggota" style="display: none; border-top: 1px solid #D7D7D7">
                             <h5 class="text-center">Data Anggota</h5>
                             <table style="width: 100%;">
                                 <tr>
@@ -61,53 +61,9 @@
                                     <td style="vertical-align: top"><span id="tampil-alamat"></span></td>
                                 </tr>
                             </table>
+                            <div class="mt-4" id="data_pinjaman">
 
-                            <h5 class="text-center">Data Modal</h5>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Simpanan Pokok</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-sp"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Simpanan Wajib</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-sw"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Simpanan Sukarela</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-ss"></span></td>
-                                </tr>
-                            </table>
-                            <h5 class="text-center">Data Pinjaman</h5>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Jumlah Pinjaman</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-pinjam"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Lama Pinjaman</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-lama"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Angsuran Ke</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-angsuranKe"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Sisa Pinjaman</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-sisa"></span></td>
-                                </tr>
-                                <tr>
-                                    <th style="vertical-align: top; width:160px">Terakhir Bayar Bulan</th>
-                                    <td style="vertical-align: top; width: 20px;">:</td>
-                                    <td style="vertical-align: top"><span id="tampil-terakhir"></span></td>
-                                </tr>
-                            </table>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -121,44 +77,11 @@
                             <h3 class="card-title">Data Transaksi</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="form-group row mb-2">
-                                <label for="tanggal_trx" class="col-12 col-md-4">Tanggal Transaksi</label>
-                                <div class="form-input col-12 col-md-8">
-                                    <input type="date" name="tanggal_trx" id="tanggal_trx" class="form-control" value="<?= date('Y-m-d'); ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-2">
-                                <label for="bulan_trx" class="col-12 col-md-4">Transaksi Bulan</label>
-                                <div class="form-input col-12 col-md-8">
-                                    <select name="bulan_trx" id="bulan_trx" class="form-control select2">
-                                        <option value="">--Pilih bulan--</option>
-                                        <?php foreach ($bulan as $key => $bln) : ?>
-                                            <option <?= (date('m') == $key) ? 'selected' : ''; ?> value="<?= $key; ?>"><?= $bln; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-2">
-                                <label for="tahun_trx" class="col-12 col-md-4">Transaksi Tahun</label>
-                                <div class="form-input col-12 col-md-8">
-                                    <input type="number" name="tahun_trx" id="tahun_trx" class="form-control" value="<?= date('Y'); ?>">
-                                </div>
-                            </div>
+                        <?= form_open('/tambah/trx_debet'); ?>
+                        <div id="tampil_transaksi">
 
-                            <?php foreach ($jenistransaksi as $jenistr) : ?>
-                                <div class="form-group row mb-2">
-                                    <label for="tahun_trx" class="col-12 col-md-4"><?= $jenistr->nama_trx; ?></label>
-                                    <div class="form-input col-12 col-md-8">
-                                        <input type="text" name="tahun_trx" id="tahun_trx" class="form-control dengan-rupiah" value="<?= ($jenistr->nominal_trx != 0) ? $jenistr->nominal_trx : ''; ?>">
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
                         </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-success">Simpan Data Transaksi</button>
-                        </div>
+                        <?= form_close(); ?>
                     </div>
                     <!-- /.card -->
 

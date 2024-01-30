@@ -173,10 +173,11 @@ $("#btn-ubah-anggota").on("click", function () {
 $("#btn-tambah-jenistransaksi").on("click", function () {
   kode_trx = $("#kode_trx").val();
   nama_trx = $("#nama_trx").val();
+  periode_trx = $("#periode_trx").val();
   jenis_trx = $("#jenis_trx").val();
   nominal_trx = $("#nominal_trx").val();
 
-  if (!(kode_trx && nama_trx && jenis_trx)) {
+  if (!(kode_trx && nama_trx && periode_trx && jenis_trx)) {
     toastr.error("Data anggota gagal ditambah, data tidak lengkap.");
     return false;
   }
@@ -187,6 +188,7 @@ $("#btn-tambah-jenistransaksi").on("click", function () {
     data: {
       kode_trx,
       nama_trx,
+      periode_trx,
       jenis_trx,
       nominal_trx,
     },
@@ -266,6 +268,7 @@ $("#example2").on("click", ".btn-ubah-jenistransaksi", function () {
       $("#jenistransaksi_id").val(data.jenistransaksi_id);
       $("#ubah_kode_trx").val(data.kode_trx);
       $("#ubah_nama_trx").val(data.nama_trx);
+      $("#ubah_periode_trx").val(data.periode_trx);
       $("#ubah_jenis_trx").val(data.jenis_trx);
       $("#ubah_nominal_trx").val(data.nominal_trx);
     },
@@ -279,6 +282,7 @@ $("#btn-ubah-jenistransaksi").on("click", function () {
   jenistransaksi_id = $("#jenistransaksi_id").val();
   kode_trx = $("#ubah_kode_trx").val();
   nama_trx = $("#ubah_nama_trx").val();
+  periode_trx = $("#ubah_periode_trx").val();
   jenis_trx = $("#ubah_jenis_trx").val();
   nominal_trx = $("#ubah_nominal_trx").val();
 
@@ -294,6 +298,7 @@ $("#btn-ubah-jenistransaksi").on("click", function () {
       jenistransaksi_id,
       kode_trx,
       nama_trx,
+      periode_trx,
       jenis_trx,
       nominal_trx,
     },
@@ -336,6 +341,8 @@ $("#dataAnggotaKoperasi").on("change", function () {
       $("#tampil-nama").html(data["dataAnggota"].nama);
       $("#tampil-no_hp").html(data["dataAnggota"].no_hp);
       $("#tampil-alamat").html(data["dataAnggota"].alamat);
+      $("#data_pinjaman").html(data["html"]);
+      $("#tampil_transaksi").html(data["html2"]);
     },
     error: function (e) {
       console.log(e);
