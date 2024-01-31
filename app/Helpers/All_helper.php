@@ -47,3 +47,12 @@ function periodetrx($per)
             break;
     }
 }
+
+function tglIndo($tgl)
+{
+    $tg = substr($tgl, 8, 2);
+    $bl = substr($tgl, 5, 2);
+    $th = substr($tgl, 0, 4);
+
+    return $tg . ' - ' . $bl . ' - ' . $th;
+}

@@ -40,7 +40,7 @@ class Ambil extends BaseController
         $statusPinjaman = [];
         foreach ($adaPinjaman as $value) {
             $terbayar = $this->transaksi
-                ->select('sum(transaksi.nominal) as terbayar, count(transaksi.nominal) as pembayaran_ke, trx_bulan, trx_tahun')
+                ->select('sum(transaksi.nominal) as terbayar, count(transaksi.nominal) as pembayaran_ke,  MAX(trx_bulan) as trx_bulan, MAX(trx_tahun) as trx_tahun')
                 ->join('pinjaman', 'pinjaman.pinjaman_id = transaksi.pinjaman_id', 'RIGHT')
                 ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
                 ->where('transaksi.anggota_id', $anggota_id)
@@ -80,16 +80,33 @@ class Ambil extends BaseController
             ];
         }
 
-        $html = '<h5 class="text-center">Data Pinjaman</h5>';
+        $formbayar = '';
+        $formBayarHutang = '';
         if ($statusPinjaman) {
             # code...
+            $formbayar .= '<div class="form-group row mb-2">
+                        <label for="tanggal_trx" class="col-12 col-md-4">Angsuran untuk</label>
+                        <div class="form-input col-12 col-md-8">
+                            <select class="form-control" name="pinjaman_id" id="pinjaman_id">';
+        }
+        $blmLunas = [];
+        $html = '<h5 class="text-center">Data Pinjaman</h5>';
+        if ($statusPinjaman) {
             foreach ($statusPinjaman as $key) {
+                $blmLunas[] = [
+                    $key['lunas'],
+                ];
                 if ($key['sisa'] != 0) {
                     $html .= '<table style="width: 100%; border-top: 1px dotted #808080; margin-bottom: 10px">
                         <tr>
                             <th style="vertical-align: top; width:160px">Jumlah Pinjaman</th>
                             <td style="vertical-align: top; width: 20px;">:</td>
-                            <td style="vertical-align: top">Rp. ' . $key['nominal_pinjaman'] . '</td>
+                            <td style="vertical-align: top">' . number_format($key['nominal_pinjaman'], 0, ',', '.') . '</td>
+                        </tr>
+                        <tr>
+                            <th style="vertical-align: top; width:160px">Tanggal Pinjam</th>
+                            <td style="vertical-align: top; width: 20px;">:</td>
+                            <td style="vertical-align: top">' . tglIndo($key['tanggal_pinjaman']) . '</td>
                         </tr>
                         <tr>
                             <th style="vertical-align: top; width:160px">Lama Pinjaman</th>
@@ -97,14 +114,14 @@ class Ambil extends BaseController
                             <td style="vertical-align: top">' . $key['lama_pinjaman'] . ' bulan</td>
                         </tr>
                         <tr>
-                            <th style="vertical-align: top; width:160px">Angsuran Ke</th>
+                            <th style="vertical-align: top; width:160px">Telah Bayar Ke</th>
                             <td style="vertical-align: top; width: 20px;">:</td>
-                            <td style="vertical-align: top">' . $key['pembayaran_ke'] . '</td>
+                            <td style="vertical-align: top">' . $key['pembayaran_ke'] . ' bulan</td>
                         </tr>
                         <tr>
                             <th style="vertical-align: top; width:160px">Sisa Pinjaman</th>
                             <td style="vertical-align: top; width: 20px;">:</td>
-                            <td style="vertical-align: top"> Rp. ' . $key['sisa'] . '</td>
+                            <td style="vertical-align: top">' . number_format($key['sisa'], 0, ',', '.') . '</td>
                         </tr>
                         <tr>
                             <th style="vertical-align: top; width:160px">Terakhir Bayar Bulan</th>
@@ -112,7 +129,34 @@ class Ambil extends BaseController
                             <td style="vertical-align: top">' . $key['trx_bulan'] . ' - ' . $key['trx_tahun'] . '</td>
                         </tr>';
                     $html .= '</table>';
+
+                    $formbayar .= '<option value="' . $key['pinjaman_id'] . '">' . $key['nominal_pinjaman'] . '</option>';
                 }
+            }
+
+            $formbayar .= '</select>
+                    </div>
+                </div>';
+
+            if (in_array(1, $blmLunas)) {
+                $formBayarHutang .= '<div class="form-group row mb-2">
+                    <label for="nominalbayarhutang" class="col-12 col-md-4">Bayar Pokok</label>
+                    <div class="form-input col-12 col-md-8">
+                        <input type="number" name="nominalbayarhutang" id="nominalbayarhutang" class="form-control" placeholder="nominal pokok">
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="nominaljasa" class="col-12 col-md-4">Bayar Jasa</label>
+                    <div class="form-input col-12 col-md-8">
+                        <input type="number" name="nominaljasa" id="nominaljasa" class="form-control" placeholder="nominal jasa">
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="pelunasan" class="col-12 col-md-4">Pelunasan Pinjaman</label>
+                    <div class="form-input col-12 col-md-8">
+                        <input type="number" name="pelunasan" id="pelunasan" class="form-control" placeholder="nominal pelunasan">
+                    </div>
+                </div>';
             }
         } else {
             $html .= '<p><b>Tidak ada data pinjaman</b></p>';
@@ -141,7 +185,7 @@ class Ambil extends BaseController
             } else {
                 $select = '';
             }
-            $pilihanbln .= '<option ' . $select . '>' . $bln . '</option>';
+            $pilihanbln .= '<option ' . $select . ' value="' . $key . '">' . $bln . '</option>';
         }
 
         $jenistransaksi = $this->jenistr
@@ -191,6 +235,10 @@ class Ambil extends BaseController
                 </div>
             </div>';
         $html2 .= $jns_trx;
+        if (in_array(1, $blmLunas)) {
+            $html2 .= $formbayar;
+            $html2 .= $formBayarHutang;
+        }
         $html2 .= '</div>
         <div class="card-footer">
             <button type="submit" class="btn btn-success">Simpan Data Transaksi</button>

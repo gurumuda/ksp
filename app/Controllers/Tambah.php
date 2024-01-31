@@ -135,7 +135,96 @@ class Tambah extends BaseController
 
     public function trx_debet()
     {
-        echo '<pre>';
-        print_r($_POST);
+        // echo '<pre>';
+        // print_r($_POST);
+        // die;
+        $anggota_id = $this->request->getPost('anggota_id');
+        $tanggal_trx = $this->request->getPost('tanggal_trx');
+        $trx_bulan = $this->request->getPost('bulan_trx');
+        $trx_tahun = $this->request->getPost('tahun_trx');
+        $pinjaman_id = $this->request->getPost('pinjaman_id');
+        $nominalbayarhutang = $this->request->getPost('nominalbayarhutang');
+        $nominaljasa = $this->request->getPost('nominaljasa');
+        $pelunasan = $this->request->getPost('pelunasan');
+
+        // proses input kuajiban bulanan dan sukarela
+
+        $jenistransaksi = $this->jenistr
+            ->where('periode_trx !=', 1)
+            ->where('jenis_trx', 1)
+            ->findAll();
+        $trx = [];
+        foreach ($jenistransaksi as $jnstrx) {
+            if ($this->request->getPost('trx_' . $jnstrx->jenistransaksi_id)) {
+                $trx[] = [
+                    'jenistransaksi_id' => $jnstrx->jenistransaksi_id,
+                    'jumlah' => $this->request->getPost('trx_' . $jnstrx->jenistransaksi_id)
+                ];
+            }
+        }
+
+        foreach ($trx as $key) {
+            $bulanan = [
+                'anggota_id' => $anggota_id,
+                'jenistransaksi_id' => $key['jenistransaksi_id'],
+                'nominal' => $key['jumlah'],
+                'tanggal_trx' => $tanggal_trx,
+                'trx_bulan' => $trx_bulan,
+                'trx_tahun' => $trx_tahun
+            ];
+            $this->transaksi->save($bulanan);
+        }
+
+        // proses input kuajiban hutang
+        $jenistransaksihutang = $this->jenistr
+            ->where('periode_trx !=', 1)
+            ->where('jenis_trx', 1)
+            ->like('nama_trx', 'pinjam')
+            ->orlike('nama_trx', 'hutang')
+            ->first();
+
+        if ($nominalbayarhutang) {
+            $byrhutang = [
+                'anggota_id' => $anggota_id,
+                'jenistransaksi_id' => $jenistransaksihutang->jenistransaksi_id,
+                'pinjaman_id' => $pinjaman_id,
+                'nominal' => $nominalbayarhutang,
+                'tanggal_trx' => $tanggal_trx,
+                'trx_bulan' => $trx_bulan,
+                'trx_tahun' => $trx_tahun
+            ];
+
+            $byrjasa = [
+                'anggota_id' => $anggota_id,
+                'pinjaman_id' => $pinjaman_id,
+                'nominal' => $nominaljasa,
+                'tanggal_trx' => $tanggal_trx,
+                'trx_bulan' => $trx_bulan,
+                'trx_tahun' => $trx_tahun
+            ];
+            $this->transaksi->save($byrhutang);
+            $this->transaksi->save($byrjasa);
+        }
+        $pelunasan_id = $this->jenistr
+            ->where('periode_trx !=', 1)
+            ->where('jenis_trx', 1)
+            ->like('nama_trx', 'lunas')
+            ->orlike('nama_trx', 'tutup')
+            ->first()->jenistransaksi_id;
+
+        if ($pelunasan) {
+            $byrlunas = [
+                'anggota_id' => $anggota_id,
+                'jenistransaksi_id' => $pelunasan_id,
+                'pinjaman_id' => $pinjaman_id,
+                'nominal' => $pelunasan,
+                'tanggal_trx' => $tanggal_trx,
+                'trx_bulan' => $trx_bulan,
+                'trx_tahun' => $trx_tahun
+            ];
+            $this->transaksi->save($byrlunas);
+        }
+
+        return redirect()->back();
     }
 }

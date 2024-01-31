@@ -28,6 +28,9 @@ class Pinjaman extends Migration
             'tanggal_pinjaman' => [
                 'type' => 'DATE'
             ],
+            'jasa' => [
+                'type' => 'FLOAT'
+            ],
             'created_at' => [
                 'type' => 'DATETIME'
             ],
