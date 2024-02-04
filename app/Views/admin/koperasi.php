@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Anggota</h1>
+                    <h1>Data Koperasi</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item active">Anggota</li>
+                        <li class="breadcrumb-item active">Koperasi</li>
                     </ol>
                 </div>
             </div>
@@ -23,53 +23,58 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
-                    <div class="card">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Data Anggota Koperasi</h3>
-                            <div class="card-tools">
-                                <button type="button" data-toggle="modal" data-target="#modal-tambah" class="btn btn-xs btn-outline-info"><i class="fas fa-plus"></i> Tambah Data</button>
-                                <button type="button" data-toggle="modal" data-target="#modal-import" class="btn btn-xs btn-outline-success"><i class="fas fa-upload"></i> Import Data</button>
-                            </div>
+                            <h3 class="card-title">Data Koperasi</h3>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover table-sm mt-1">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th nowrap>Jenis Kelamin</th>
-                                        <th>Alamat</th>
-                                        <th>HP</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $no = 1;
-                                    foreach ($anggota as $agt) : ?>
-                                        <tr>
-                                            <td><?= $no++; ?></td>
-                                            <td nowrap><?= $agt->nama; ?></td>
-                                            <td><?= jk($agt->jenis_kelamin); ?></td>
-                                            <td><?= $agt->alamat; ?></td>
-                                            <td nowrap><?= $agt->no_hp; ?></td>
-                                            <td nowrap>
-                                                <button data-id="<?= $agt->anggota_id; ?>" data-nama="<?= $agt->nama; ?>" class="btn btn-xs btn-outline-warning btn-ubah-anggota"><i class="fas fa-edit"></i></button>
-                                                <button data-id="<?= $agt->anggota_id; ?>" data-nama="<?= $agt->nama; ?>" class="btn btn-xs btn-outline-danger btn-hapus-anggota"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
+                        <!-- form start -->
+                        <form>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="nama">Nama Koperasi</label>
+                                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama koperasi" value="<?= $koperasi->nama; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="no">Nomor Badan Hukum</label>
+                                    <input type="text" class="form-control" name="no" id="no" placeholder="Masukkan no SIUP" value="<?= $koperasi->no; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="alamat">Alamat Kantor</label>
+                                    <textarea name="alamat" id="alamat" rows="5" class="form-control"><?= $koperasi->alamat; ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kas">Kas (Rp.)</label>
+                                    <input type="number" class="form-control" name="kas" id="kas" placeholder="Nominal kas per input data" value="<?= $koperasi->kas; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="logo">Logo</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="logo" id="logo" />
+                                            <label class="custom-file-label" for="logo">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <!-- /.card -->
 
                 </div>
-                <!-- /.col -->
+                <!--/.col (left) -->
+
             </div>
             <!-- /.row -->
         </div>
@@ -138,12 +143,6 @@
                     <label for="no_hp" class="col-sm-3 col-form-label">Nomor HP/WA</label>
                     <div class="col-sm-9">
                         <input type="number" class="form-control" id="no_hp" placeholder="Nomor HP">
-                    </div>
-                </div>
-                <div class="form-group row mb-1">
-                    <label for="simp_pokok" class="col-sm-3 col-form-label">Simpanan Pokok</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" id="simp_pokok" placeholder="Simpanan pokok anggota" value="<?= $pokok; ?>">
                     </div>
                 </div>
             </div>

@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\Logsaldo;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use PhpParser\Node\Expr\New_;
 use Psr\Log\LoggerInterface;
 
 /**

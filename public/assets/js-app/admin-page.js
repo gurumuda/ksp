@@ -16,6 +16,7 @@ $("#btn-tambah-anggota").on("click", function () {
   alamat = $("#alamat").val();
   no_hp = $("#no_hp").val();
   jenis_kelamin = $("#jenis_kelamin").val();
+  simp_pokok = $("#simp_pokok").val();
 
   if (!(username && password && nama && jenis_kelamin)) {
     toastr.error("Data anggota gagal ditambah, data tidak lengkap.");
@@ -34,6 +35,7 @@ $("#btn-tambah-anggota").on("click", function () {
       jenis_kelamin,
       alamat,
       no_hp,
+      simp_pokok,
     },
     success: function (data) {
       //   console.log(data);
@@ -331,6 +333,34 @@ $("#dataAnggotaKoperasi").on("change", function () {
 
   $.ajax({
     url: "/ambil/transaksiDebet",
+    type: "POST",
+    headers: { "X-Requested-With": "XMLHttpRequest" },
+    dataType: "json",
+    data: { anggota_id },
+    success: function (data) {
+      console.log(data);
+      $("#tampil-data-anggota").show();
+      $("#tampil-nama").html(data["dataAnggota"].nama);
+      $("#tampil-no_hp").html(data["dataAnggota"].no_hp);
+      $("#tampil-alamat").html(data["dataAnggota"].alamat);
+      $("#data_pinjaman").html(data["html"]);
+      $("#tampil_transaksi").html(data["html2"]);
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+});
+
+/**
+ * Halaman Admin Transaksi Kredit
+ */
+// Ambil Data Anggota dan Jenis Transaksi
+$("#dtAnggotaKoperasi").on("change", function () {
+  anggota_id = $(this).val();
+
+  $.ajax({
+    url: "/ambil/transaksiKredit",
     type: "POST",
     headers: { "X-Requested-With": "XMLHttpRequest" },
     dataType: "json",

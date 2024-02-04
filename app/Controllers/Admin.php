@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\Koperasi;
 use CodeIgniter\HTTP\ResponseInterface;
 
 
@@ -16,13 +17,18 @@ class Admin extends BaseController
 
     public function koperasi()
     {
-        return view('admin/anggota');
+        $koperasi = new Koperasi();
+        $data = [
+            'koperasi' => $koperasi->first()
+        ];
+        return view('admin/koperasi', $data);
     }
 
     public function anggota()
     {
         $data = [
-            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll()
+            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll(),
+            'pokok' => $this->jenistr->where('periode_trx', 1)->first()->nominal_trx
         ];
         return view('admin/anggota', $data);
     }
@@ -47,5 +53,13 @@ class Admin extends BaseController
             'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll(),
         ];
         return view('admin/debet', $data);
+    }
+
+    public function kredit()
+    {
+        $data = [
+            'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll(),
+        ];
+        return view('admin/kredit', $data);
     }
 }

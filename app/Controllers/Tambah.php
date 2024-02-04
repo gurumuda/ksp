@@ -17,6 +17,7 @@ class Tambah extends BaseController
         $jenis_kelamin = $this->request->getPost('jenis_kelamin');
         $alamat = $this->request->getPost('alamat');
         $no_hp = $this->request->getPost('no_hp');
+        $simp_pokok = $this->request->getPost('simp_pokok');
 
         $data = [
             'username' => $username,
@@ -33,6 +34,17 @@ class Tambah extends BaseController
             # code...
             $simpan = $this->anggota->save($data);
             if ($simpan) {
+                $trx = $this->jenistr->where('periode_trx', 1)->first();
+                $daftar = [
+                    'anggota_id' => $this->anggota->getInsertID(),
+                    'jenistransaksi_id' => $trx->jenistransaksi_id,
+                    'nominal' => $simp_pokok,
+                    'tanggal_trx' => date('Y-m-d'),
+                    'trx_bulan' => date('m'),
+                    'trx_tahun' => date('Y')
+                ];
+                $this->transaksi->save($daftar);
+
                 return '1';
             }
             return '0';
@@ -95,6 +107,17 @@ class Tambah extends BaseController
             $cek = $this->anggota->where('username', $rows[$i][1])->first();
             if (!$cek && $rows[$i][1] != '') {
                 $this->anggota->save($data);
+
+                $trx = $this->jenistr->where('periode_trx', 1)->first();
+                $daftar = [
+                    'anggota_id' => $this->anggota->getInsertID(),
+                    'jenistransaksi_id' => $trx->jenistransaksi_id,
+                    'nominal' => $trx->nominal_trx,
+                    'tanggal_trx' => date('Y-m-d'),
+                    'trx_bulan' => date('m'),
+                    'trx_tahun' => date('Y')
+                ];
+                $this->transaksi->save($daftar);
             } else {
                 session()->setFlashdata('error', 'Ada duplikasi data username');
                 return redirect()->back();
@@ -223,6 +246,54 @@ class Tambah extends BaseController
                 'trx_tahun' => $trx_tahun
             ];
             $this->transaksi->save($byrlunas);
+        }
+
+        return redirect()->back();
+    }
+
+    public function trx_kredit()
+    {
+
+        $anggota_id = $this->request->getPost('anggota_id');
+        $tanggal_trx = $this->request->getPost('tanggal_trx');
+        $trx_bulan = $this->request->getPost('bulan_trx');
+        $trx_tahun = $this->request->getPost('tahun_trx');
+        $lama_pinjaman = $this->request->getPost('lama_pinjaman');
+
+        $jenistransaksi = $this->jenistr
+            ->where('periode_trx !=', 1)
+            ->where('jenis_trx', 2)
+            ->findAll();
+        $trx = [];
+        foreach ($jenistransaksi as $jnstrx) {
+            if ($this->request->getPost('trx_' . $jnstrx->jenistransaksi_id)) {
+                $trx[] = [
+                    'jenistransaksi_id' => $jnstrx->jenistransaksi_id,
+                    'jumlah' => $this->request->getPost('trx_' . $jnstrx->jenistransaksi_id)
+                ];
+            }
+        }
+
+        foreach ($trx as $key) {
+            $dtPinjaman = [
+                'anggota_id' => $anggota_id,
+                'lama_pinjaman' => $lama_pinjaman,
+                'nominal_pinjaman' => $key['jumlah'],
+                'tanggal_pinjaman' => $tanggal_trx
+            ];
+
+            $this->pinjaman->save($dtPinjaman);
+
+            $kredit = [
+                'anggota_id' => $anggota_id,
+                'jenistransaksi_id' => $key['jenistransaksi_id'],
+                'pinjaman_id' => $this->pinjaman->getInsertID(),
+                'nominal' => $key['jumlah'],
+                'tanggal_trx' => $tanggal_trx,
+                'trx_bulan' => $trx_bulan,
+                'trx_tahun' => $trx_tahun
+            ];
+            $this->transaksi->save($kredit);
         }
 
         return redirect()->back();
