@@ -29,7 +29,6 @@
                             <h3 class="card-title">Data Jenis Transaksi</h3>
                             <div class="card-tools">
                                 <button type="button" data-toggle="modal" data-target="#modal-tambah" class="btn btn-xs btn-outline-info"><i class="fas fa-plus"></i> Tambah Data</button>
-                                <button type="button" data-toggle="modal" data-target="#modal-import" class="btn btn-xs btn-outline-success"><i class="fas fa-upload"></i> Import Data</button>
                             </div>
                         </div>
                         <!-- /.card-header -->

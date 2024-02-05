@@ -62,4 +62,53 @@ class Admin extends BaseController
         ];
         return view('admin/kredit', $data);
     }
+
+    public function bku()
+    {
+        $koperasi = new Koperasi();
+        $transaksi = $this->transaksi
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->join('anggota', 'anggota.anggota_id = transaksi.anggota_id', 'LEFT')
+            ->where('MONTH(tanggal_trx)', 02)
+            ->orderBy('transaksi.tanggal_trx', 'ASC')
+            ->orderBy('transaksi.transaksi_id', 'ASC')
+            ->findAll();
+
+        $keluarA = $this->transaksi
+            ->select('SUM(nominal) as keluar')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 2)
+            ->where('tanggal_trx <', '2024-02-01')
+            ->first()->keluar;
+        $masukA = $this->transaksi
+            ->select('SUM(nominal) as masuk')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 1)
+            ->where('tanggal_trx <', '2024-02-01')
+            ->first()->masuk;
+
+        $keluarB = $this->transaksi
+            ->select('SUM(nominal) as keluar')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 2)
+            ->where('tanggal_trx <', '2024-03-01')
+            ->first()->keluar;
+        $masukB = $this->transaksi
+            ->select('SUM(nominal) as masuk')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 1)
+            ->where('tanggal_trx <', '2024-03-01')
+            ->first()->masuk;
+
+        $kas = $koperasi->first()->kas;
+        $saldoA = $kas + $masukA - $keluarA;
+        $saldoB = $kas + $masukB - $keluarB;
+        $data = [
+            'koperasi' => $koperasi->first(),
+            'transaksi' => $transaksi,
+            'saldoA' => $saldoA,
+            'saldoB' => $saldoB
+        ];
+        return view('admin/bku', $data);
+    }
 }

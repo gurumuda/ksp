@@ -213,8 +213,8 @@ $submenu = $uri->getSegment(2);
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item <?= ($submenu == 'bku' || $submenu == 'bkbesar') ? 'menu-open' : ''; ?>">
+                            <a href="#" class="nav-link <?= ($submenu == 'bku' || $submenu == 'bkbesar') ? 'active' : ''; ?>">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Laporan
@@ -223,7 +223,7 @@ $submenu = $uri->getSegment(2);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../charts/chartjs.html" class="nav-link">
+                                    <a href="/admin/bku" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>ChartJS</p>
                                     </a>
