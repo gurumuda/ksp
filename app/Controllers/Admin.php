@@ -70,6 +70,7 @@ class Admin extends BaseController
 
         $koperasi = new Koperasi();
         $transaksi = $this->transaksi->bku($awal, $akhir)->findAll();
+
         $keluarA = $this->transaksi->keluarA($awal, $akhir)->first()->keluar;
         $masukA = $this->transaksi->masukA($awal, $akhir)->first()->masuk;
 
@@ -77,8 +78,18 @@ class Admin extends BaseController
         $masukB = $this->transaksi->masukB($awal, $akhir)->first()->masuk;
 
         $kas = $koperasi->first()->kas;
-        $saldoA = $kas + $masukA - $keluarA;
+        if ($awal) {
+            $saldoA = $kas + $masukA - $keluarA;
+            # code...
+        } else {
+            # code...
+            $saldoA = $kas;
+        }
+
         $saldoB = $kas + $masukB - $keluarB;
+
+        // dd($keluarA);
+
         $data = [
             'koperasi' => $koperasi->first(),
             'transaksi' => $transaksi,

@@ -33,13 +33,13 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Tanggal Awal</label>
-                                <input type="date" name="tglMulai" id="tglMulai" class="form-control" value="<?= $tglMulai ? $tglMulai : ''; ?>">
+                                <input type="date" required name="tglMulai" id="tglMulai" class="form-control" value="<?= $tglMulai ? $tglMulai : ''; ?>">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="">Tanggal Akhir</label>
-                                <input type="date" name="tglSelesai" id="tglSelesai" class="form-control" value="<?= $tglSelesai ? $tglSelesai : ''; ?>">
+                                <input type="date" required name="tglSelesai" id="tglSelesai" class="form-control" value="<?= $tglSelesai ? $tglSelesai : ''; ?>">
                             </div>
                         </div>
                         <div class="col-2 pt-1">
@@ -80,6 +80,13 @@
                                     foreach ($transaksi as $tr) : ?>
                                         <?php
 
+                                        if ($tr->jenistransaksi_id == 0) {
+                                            $namaTransaksi = 'Jasa pinjaman';
+                                        } else {
+                                            $namaTransaksi = $tr->nama_trx;
+                                        }
+
+
                                         if ($tr->jenis_trx == 1) {
                                             # uang masuk
                                             $ket = 'Diterima dari ';
@@ -97,7 +104,7 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= tglIndo($tr->tanggal_trx); ?></td>
-                                            <td><?= $ket . $tr->nama . '<br>' . $ket2 . $tr->nama_trx; ?></td>
+                                            <td><?= $ket . $tr->nama . '<br>' . $ket2 . $namaTransaksi; ?></td>
                                             <td><?= ($debet) ? number_format($tr->nominal, 0, ',', '.') : ''; ?></td>
                                             <td><?= ($kredit) ? number_format($tr->nominal, 0, ',', '.') : ''; ?></td>
                                             <td>

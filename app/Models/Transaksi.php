@@ -43,7 +43,6 @@ class Transaksi extends Model
         $this->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
             ->join('anggota', 'anggota.anggota_id = transaksi.anggota_id', 'LEFT');
         if ($awal != null) {
-            # code...
             $this->where('tanggal_trx >=', $awal);
             $this->where('tanggal_trx <=', $akhir);
         }
@@ -58,9 +57,8 @@ class Transaksi extends Model
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
             ->where('jenis_trx', 2);
         if ($awal != null) {
-            # code...
-            $this->where('tanggal_trx >=', $awal);
-            $this->where('tanggal_trx <=', $akhir);
+            $this->where('tanggal_trx <=', $awal);
+            // $this->where('tanggal_trx <=', $akhir);
         }
         return $this;
     }
@@ -71,9 +69,8 @@ class Transaksi extends Model
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
             ->where('jenis_trx', 1);
         if ($awal != null) {
-            # code...
-            $this->where('tanggal_trx >=', $awal);
-            $this->where('tanggal_trx <=', $akhir);
+            $this->where('tanggal_trx <=', $awal);
+            // $this->where('tanggal_trx <=', $akhir);
         }
         return $this;
     }
@@ -84,7 +81,6 @@ class Transaksi extends Model
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
             ->where('jenis_trx', 2);
         if ($awal != null) {
-            # code...
             $this->where('tanggal_trx >=', $awal);
             $this->where('tanggal_trx <=', $akhir);
         }
@@ -97,7 +93,6 @@ class Transaksi extends Model
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
             ->where('jenis_trx', 1);
         if ($awal != null) {
-            # code...
             $this->where('tanggal_trx >=', $awal);
             $this->where('tanggal_trx <=', $akhir);
         }
