@@ -15,6 +15,8 @@ $submenu = $uri->getSegment(2);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/fontawesome-free/css/all.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="/assets/daterangepicker/daterangepicker.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="/assets/select2/css/select2.min.css">
     <link rel="stylesheet" href="/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -278,6 +280,9 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- InputMask -->
+    <script src="/assets/moment/moment.min.js"></script>
+    <script src="/assets/inputmask/jquery.inputmask.min.js"></script>
     <!-- Select2 -->
     <script src="/assets/select2/js/select2.full.min.js"></script>
     <!-- SweetAlert2 -->
@@ -297,6 +302,8 @@ $submenu = $uri->getSegment(2);
     <script src="/assets/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- bs-custom-file-input -->
     <script src="/assets/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="/assets/daterangepicker/daterangepicker.js"></script>
     <!-- Toast -->
     <script src="/assets/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
@@ -346,6 +353,12 @@ $submenu = $uri->getSegment(2);
                 stateSave: true
             });
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            //Date range picker
+            $('#reservation').daterangepicker()
+        })
     </script>
 
     <!-- <script>

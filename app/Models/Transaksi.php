@@ -37,4 +37,70 @@ class Transaksi extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function bku($awal, $akhir)
+    {
+        $this->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->join('anggota', 'anggota.anggota_id = transaksi.anggota_id', 'LEFT');
+        if ($awal != null) {
+            # code...
+            $this->where('tanggal_trx >=', $awal);
+            $this->where('tanggal_trx <=', $akhir);
+        }
+        $this->orderBy('transaksi.tanggal_trx', 'ASC')
+            ->orderBy('transaksi.transaksi_id', 'ASC');
+        return $this;
+    }
+
+    function keluarA($awal, $akhir)
+    {
+        $this->select('SUM(nominal) as keluar')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 2);
+        if ($awal != null) {
+            # code...
+            $this->where('tanggal_trx >=', $awal);
+            $this->where('tanggal_trx <=', $akhir);
+        }
+        return $this;
+    }
+
+    function masukA($awal, $akhir)
+    {
+        $this->select('SUM(nominal) as masuk')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 1);
+        if ($awal != null) {
+            # code...
+            $this->where('tanggal_trx >=', $awal);
+            $this->where('tanggal_trx <=', $akhir);
+        }
+        return $this;
+    }
+
+    function keluarB($awal, $akhir)
+    {
+        $this->select('SUM(nominal) as keluar')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 2);
+        if ($awal != null) {
+            # code...
+            $this->where('tanggal_trx >=', $awal);
+            $this->where('tanggal_trx <=', $akhir);
+        }
+        return $this;
+    }
+
+    function masukB($awal, $akhir)
+    {
+        $this->select('SUM(nominal) as masuk')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->where('jenis_trx', 1);
+        if ($awal != null) {
+            # code...
+            $this->where('tanggal_trx >=', $awal);
+            $this->where('tanggal_trx <=', $akhir);
+        }
+        return $this;
+    }
 }
