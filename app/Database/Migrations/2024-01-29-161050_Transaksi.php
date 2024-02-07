@@ -14,6 +14,10 @@ class Transaksi extends Migration
                 'constraint'     => 11,
                 'auto_increment' => true,
             ],
+            'jensi_trx' => [
+                'type' => 'INT',
+                'constraint' => '11'
+            ],
             'anggota_id' => [
                 'type' => 'INT',
                 'constraint' => '11'
@@ -23,6 +27,10 @@ class Transaksi extends Migration
                 'constraint' => '11'
             ],
             'pinjaman_id' => [
+                'type' => 'INT',
+                'constraint' => '11'
+            ],
+            'beban_id' => [
                 'type' => 'INT',
                 'constraint' => '11'
             ],

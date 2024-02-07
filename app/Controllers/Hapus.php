@@ -27,4 +27,15 @@ class Hapus extends BaseController
         }
         return '0';
     }
+
+    public function beban()
+    {
+        $beban_id = $this->request->getPost('id');
+        $hapus = $this->beban->delete($beban_id);
+        $hapustr = $this->transaksi->where('beban_id', $beban_id)->delete();
+        if ($hapus) {
+            return '1';
+        }
+        return '0';
+    }
 }

@@ -86,7 +86,7 @@ class Admin extends BaseController
             $saldoA = $kas;
         }
 
-        $saldoB = $kas + $masukB - $keluarB;
+        $saldoB = $saldoA + $masukB - $keluarB;
 
         // dd($keluarA);
 
@@ -100,5 +100,17 @@ class Admin extends BaseController
 
         ];
         return view('admin/bku', $data);
+    }
+
+    public function beban()
+    {
+        $data = [
+            'beban' => $this->transaksi
+                ->select('*, beban.beban_id as beban_id')
+                ->join('beban', 'beban.beban_id = transaksi.beban_id', 'LEFT')
+                ->where('transaksi.beban_id !=', 0)
+                ->orderBy('transaksi.tanggal_trx', 'ASC')->findAll()
+        ];
+        return view('admin/beban', $data);
     }
 }

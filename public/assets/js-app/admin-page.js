@@ -379,3 +379,44 @@ $("#dtAnggotaKoperasi").on("change", function () {
     },
   });
 });
+
+// hapus data transaksi beban
+$("#example2").on("click", ".btn-hapus-beban", function () {
+  id = $(this).data("id");
+  nama = $(this).data("nama");
+  whichtr = $(this).closest("tr");
+
+  Swal.fire({
+    title: "Konfirmasi hapus data !",
+    text: "Anda akan menghapus data " + nama,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Hapus !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/hapus/beban",
+        type: "POST",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        data: { id },
+        success: function (data) {
+          //   console.log(data);
+          if (data == "1") {
+            toastr.success("Data jenis transaksi berhasil dihapus.");
+            whichtr.remove();
+          }
+          if (data == "0") {
+            toastr.error(
+              "Data jenis transaksi gagal dihapus, ada kesalahan sistem."
+            );
+          }
+        },
+        error: function (e) {
+          console.log(e);
+        },
+      });
+    }
+  });
+});

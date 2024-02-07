@@ -80,23 +80,30 @@
                                     foreach ($transaksi as $tr) : ?>
                                         <?php
 
-                                        if ($tr->jenistransaksi_id == 0) {
+                                        if ($tr->jenistransaksi_id == 0 && $tr->beban_id == 0) {
                                             $namaTransaksi = 'Jasa pinjaman';
+                                        } elseif ($tr->jenistransaksi_id == 0 && $tr->beban_id != 0) {
+                                            $namaTransaksi = $tr->namaBeban;
                                         } else {
                                             $namaTransaksi = $tr->nama_trx;
                                         }
 
-
-                                        if ($tr->jenis_trx == 1) {
+                                        if ($tr->jenis_trx == 1 && $tr->beban_id == 0) {
                                             # uang masuk
                                             $ket = 'Diterima dari ';
                                             $ket2 = ' untuk ';
                                             $debet = $tr->nominal;
                                             $kredit = '';
-                                        } elseif ($tr->jenis_trx == 2) {
+                                        } elseif ($tr->jenis_trx == 2 && $tr->beban_id == 0) {
                                             # uang keluar
                                             $ket = 'Dibayarkan kepada ';
                                             $ket2 = ' untuk ';
+                                            $debet = '';
+                                            $kredit = $tr->nominal;
+                                        } elseif ($tr->beban_id != 0) {
+                                            # uang keluar
+                                            $ket = 'Dibayarkan untuk ';
+                                            $ket2 = '';
                                             $debet = '';
                                             $kredit = $tr->nominal;
                                         }; ?>

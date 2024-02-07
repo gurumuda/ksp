@@ -40,7 +40,10 @@ class Transaksi extends Model
 
     function bku($awal, $akhir)
     {
-        $this->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+
+        $this->select('*, beban.nama_trx as namaBeban, transaksi.jenis_trx, jenistransaksi.nama_trx as nama_trx')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
+            ->join('beban', 'beban.beban_id = transaksi.beban_id', 'LEFT')
             ->join('anggota', 'anggota.anggota_id = transaksi.anggota_id', 'LEFT');
         if ($awal != null) {
             $this->where('tanggal_trx >=', $awal);
@@ -53,11 +56,12 @@ class Transaksi extends Model
 
     function keluarA($awal, $akhir)
     {
+        # total kredit awal
         $this->select('SUM(nominal) as keluar')
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
-            ->where('jenis_trx', 2);
+            ->where('transaksi.jenis_trx', 2);
         if ($awal != null) {
-            $this->where('tanggal_trx <=', $awal);
+            $this->where('tanggal_trx <', $awal);
             // $this->where('tanggal_trx <=', $akhir);
         }
         return $this;
@@ -65,11 +69,12 @@ class Transaksi extends Model
 
     function masukA($awal, $akhir)
     {
+        # total debet awal
         $this->select('SUM(nominal) as masuk')
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
-            ->where('jenis_trx', 1);
+            ->where('transaksi.jenis_trx', 1);
         if ($awal != null) {
-            $this->where('tanggal_trx <=', $awal);
+            $this->where('tanggal_trx <', $awal);
             // $this->where('tanggal_trx <=', $akhir);
         }
         return $this;
@@ -79,7 +84,7 @@ class Transaksi extends Model
     {
         $this->select('SUM(nominal) as keluar')
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
-            ->where('jenis_trx', 2);
+            ->where('transaksi.jenis_trx', 2);
         if ($awal != null) {
             $this->where('tanggal_trx >=', $awal);
             $this->where('tanggal_trx <=', $akhir);
@@ -91,7 +96,7 @@ class Transaksi extends Model
     {
         $this->select('SUM(nominal) as masuk')
             ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id', 'LEFT')
-            ->where('jenis_trx', 1);
+            ->where('transaksi.jenis_trx', 1);
         if ($awal != null) {
             $this->where('tanggal_trx >=', $awal);
             $this->where('tanggal_trx <=', $akhir);

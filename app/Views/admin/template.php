@@ -196,6 +196,12 @@ $submenu = $uri->getSegment(2);
                                         <p>Data Anggota</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="/admin/beban" class="nav-link <?= ($submenu == 'beban') ? 'active' : ''; ?>">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Biaya Beban</p>
+                                    </a>
+                                </li>
 
                             </ul>
                         </li>

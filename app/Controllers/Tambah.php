@@ -188,6 +188,7 @@ class Tambah extends BaseController
 
         foreach ($trx as $key) {
             $bulanan = [
+                'jenis_trx' => 1,
                 'anggota_id' => $anggota_id,
                 'jenistransaksi_id' => $key['jenistransaksi_id'],
                 'nominal' => $key['jumlah'],
@@ -208,6 +209,7 @@ class Tambah extends BaseController
 
         if ($nominalbayarhutang) {
             $byrhutang = [
+                'jenis_trx' => 1,
                 'anggota_id' => $anggota_id,
                 'jenistransaksi_id' => $jenistransaksihutang->jenistransaksi_id,
                 'pinjaman_id' => $pinjaman_id,
@@ -218,6 +220,7 @@ class Tambah extends BaseController
             ];
 
             $byrjasa = [
+                'jenis_trx' => 1,
                 'anggota_id' => $anggota_id,
                 'pinjaman_id' => $pinjaman_id,
                 'nominal' => $nominaljasa,
@@ -237,6 +240,7 @@ class Tambah extends BaseController
 
         if ($pelunasan) {
             $byrlunas = [
+                'jenis_trx' => 1,
                 'anggota_id' => $anggota_id,
                 'jenistransaksi_id' => $pelunasan_id,
                 'pinjaman_id' => $pinjaman_id,
@@ -285,6 +289,7 @@ class Tambah extends BaseController
             $this->pinjaman->save($dtPinjaman);
 
             $kredit = [
+                'jenis_trx' => 2,
                 'anggota_id' => $anggota_id,
                 'jenistransaksi_id' => $key['jenistransaksi_id'],
                 'pinjaman_id' => $this->pinjaman->getInsertID(),
@@ -295,6 +300,35 @@ class Tambah extends BaseController
             ];
             $this->transaksi->save($kredit);
         }
+
+        return redirect()->back();
+    }
+
+    public function beban()
+    {
+        $nama_trx = $this->request->getPost('nama_trx');
+        $nominal = $this->request->getPost('nominal_trx');
+        $tanggal_trx = $this->request->getPost('tanggal_trx');
+
+        $trx_bulan = substr((string)$tanggal_trx, 5, 2);
+        $trx_tahun = substr((string)$tanggal_trx, 0, 4);
+
+        $dataBeban = [
+            'nama_trx' => $nama_trx
+        ];
+
+        $this->beban->save($dataBeban);
+
+        $dataTransaksi = [
+            'jenis_trx' => 2,
+            'beban_id' => $this->beban->getInsertID(),
+            'nominal' => $nominal,
+            'tanggal_trx' => $tanggal_trx,
+            'trx_bulan' => $trx_bulan,
+            'trx_tahun' => $trx_tahun
+        ];
+
+        $this->transaksi->save($dataTransaksi);
 
         return redirect()->back();
     }
