@@ -165,7 +165,12 @@ class Admin extends BaseController
                 ->where('YEAR(tanggal_trx)', $tahun)
                 ->first()->jasa;
             $shuModalAnggota = $modal * $persenModal / $totalModal;
-            $shuJasaAnggota = $jasa * $persenJasa / $totalJasa;
+            if ($totalJasa) {
+                $shuJasaAnggota = $jasa * $persenJasa / $totalJasa;
+            } else {
+                $shuJasaAnggota = 0;
+            }
+
             $shuDiterima = $shuModalAnggota + $shuJasaAnggota;
 
             $data[] = [

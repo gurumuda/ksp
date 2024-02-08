@@ -55,7 +55,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table tbl-sm">
+                            <table class="table table-sm table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -76,7 +76,8 @@
                                         <td><?= number_format($saldoA, 0, ',', '.'); ?></td>
                                     </tr>
                                     <?php $no = 1;
-
+                                    $i = 0;
+                                    $saldo = [];
                                     foreach ($transaksi as $tr) : ?>
                                         <?php
 
@@ -94,18 +95,21 @@
                                             $ket2 = ' untuk ';
                                             $debet = $tr->nominal;
                                             $kredit = '';
+                                            $saldo[] = $transaksi[$i]->nominal;
                                         } elseif ($tr->jenis_trx == 2 && $tr->beban_id == 0) {
                                             # uang keluar
                                             $ket = 'Dibayarkan kepada ';
                                             $ket2 = ' untuk ';
                                             $debet = '';
                                             $kredit = $tr->nominal;
+                                            $saldo[] = -$transaksi[$i]->nominal;
                                         } elseif ($tr->beban_id != 0) {
                                             # uang keluar
                                             $ket = 'Dibayarkan untuk ';
                                             $ket2 = '';
                                             $debet = '';
                                             $kredit = $tr->nominal;
+                                            $saldo[] = -$transaksi[$i]->nominal;
                                         }; ?>
 
                                         <tr>
@@ -115,9 +119,11 @@
                                             <td><?= ($debet) ? number_format($tr->nominal, 0, ',', '.') : ''; ?></td>
                                             <td><?= ($kredit) ? number_format($tr->nominal, 0, ',', '.') : ''; ?></td>
                                             <td>
-
+                                                <?= number_format((array_sum($saldo) + $saldoA), 0, ',', '.');
+                                                ?>
                                             </td>
                                         </tr>
+                                        <?php $i++; ?>
                                     <?php endforeach; ?>
                                     <tr>
                                         <td></td>
