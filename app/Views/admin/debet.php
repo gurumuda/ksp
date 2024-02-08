@@ -61,6 +61,12 @@
                                     <td style="vertical-align: top"><span id="tampil-alamat"></span></td>
                                 </tr>
                             </table>
+                            <div>
+                                Tercatat membayar simpanan wajib tahun <?= $tahun; ?> pada bulan :
+                            </div>
+                            <div class="mt-1" id="wajib">
+
+                            </div>
                             <div class="mt-4" id="data_pinjaman">
 
                             </div>

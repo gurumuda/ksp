@@ -61,5 +61,6 @@ abstract class BaseController extends Controller
         $this->transaksi = new \App\Models\Transaksi();
         $this->pinjaman = new \App\Models\Pinjaman();
         $this->beban = new \App\Models\Beban();
+        $this->koperasi = new \App\Models\Koperasi();
     }
 }

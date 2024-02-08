@@ -31,6 +31,16 @@ class Koperasi extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 60
             ],
+            'tahun' => [
+                'type' => 'VARCHAR',
+                'constraint' => '4'
+            ],
+            'shu_modal' => [
+                'type' => 'FLOAT'
+            ],
+            'shu_jasa' => [
+                'type' => 'FLOAT'
+            ],
             'created_at' => [
                 'type' => 'DATETIME'
             ],

@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\Koperasi;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Modules\Modules;
+use Config\App;
 
 class Ubah extends BaseController
 {
@@ -83,5 +86,38 @@ class Ubah extends BaseController
             return '0';
         }
         return '2';
+    }
+
+    public function koperasi()
+    {
+        $nama = $this->request->getPost('nama');
+        $no = $this->request->getPost('no');
+        $alamat = $this->request->getPost('alamat');
+        $kas = $this->request->getPost('kas');
+        $tahun = $this->request->getPost('tahun');
+
+        $data = [
+            'koperasi_id' => 1,
+            'nama' => $nama,
+            'no' => $no,
+            'alamat' => $alamat,
+            'kas' => $kas,
+            'tahun' => $tahun,
+        ];
+        $this->koperasi->save($data);
+        return redirect()->back();
+    }
+
+    public function persen_shu()
+    {
+        $shu_modal = $this->request->getPost('shu_modal');
+        $shu_jasa = $this->request->getPost('shu_jasa');
+        $data = [
+            'koperasi_id' => 1,
+            'shu_modal' => $shu_modal,
+            'shu_jasa' => $shu_jasa,
+        ];
+        $this->koperasi->save($data);
+        return redirect()->back();
     }
 }

@@ -51,6 +51,7 @@ class Admin extends BaseController
     {
         $data = [
             'anggota' => $this->anggota->orderBy('nama', 'ASC')->findAll(),
+            'tahun' => $this->koperasi->first()->tahun
         ];
         return view('admin/debet', $data);
     }
@@ -112,5 +113,80 @@ class Admin extends BaseController
                 ->orderBy('transaksi.tanggal_trx', 'ASC')->findAll()
         ];
         return view('admin/beban', $data);
+    }
+
+    public function shu()
+    {
+        $tahun = $this->koperasi->first()->tahun;
+        $anggotas = $this->transaksi
+            ->join('anggota', 'anggota.anggota_id = transaksi.anggota_id', 'LEFT')
+            ->where('transaksi.anggota_id !=', 0)
+            ->groupBy('transaksi.anggota_id')
+            ->findAll();
+
+        $totalModal = $this->transaksi
+            ->select('sum(nominal) as totalmodal')
+            ->where('transaksi.jenis_trx', 1)
+            ->where('jenistransaksi.nominal_trx <>', 0)
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id')
+            ->first()->totalmodal;
+        $totalJasa = $this->transaksi
+            ->select('sum(nominal) as totalJasa')
+            ->where('transaksi.jenis_trx', 1)
+            ->where('transaksi.jenistransaksi_id', 0)
+            ->where('transaksi.beban_id', 0)
+            ->where('YEAR(tanggal_trx)', $tahun)
+            ->first()->totalJasa;
+        $totalBeban = $this->transaksi
+            ->select('sum(nominal) as totalBeban')
+            ->where('transaksi.jenis_trx', 2)
+            ->where('transaksi.jenistransaksi_id', 0)
+            ->where('transaksi.beban_id <>', 0)
+            ->where('YEAR(tanggal_trx)', $tahun)
+            ->first()->totalBeban;
+        $shuDibagi = $totalJasa - $totalBeban;
+        $persenModal = $shuDibagi * ($this->koperasi->first()->shu_modal) / 100;
+        $persenJasa = $shuDibagi * ($this->koperasi->first()->shu_jasa) / 100;
+        $data = [];
+        foreach ($anggotas as $anggota) {
+            $modal = $this->transaksi
+                ->select('sum(nominal) as modal')
+                ->where('transaksi.anggota_id', $anggota->anggota_id)
+                ->where('transaksi.jenis_trx', 1)
+                ->where('jenistransaksi.nominal_trx <>', 0)
+                ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id')
+                ->first()->modal;
+            $jasa = $this->transaksi
+                ->select('sum(nominal) as jasa')
+                ->where('transaksi.anggota_id', $anggota->anggota_id)
+                ->where('transaksi.jenis_trx', 1)
+                ->where('transaksi.jenistransaksi_id', 0)
+                ->where('transaksi.beban_id', 0)
+                ->where('YEAR(tanggal_trx)', $tahun)
+                ->first()->jasa;
+            $shuModalAnggota = $modal * $persenModal / $totalModal;
+            $shuJasaAnggota = $jasa * $persenJasa / $totalJasa;
+            $shuDiterima = $shuModalAnggota + $shuJasaAnggota;
+
+            $data[] = [
+                'nama_anggota' => $anggota->nama,
+                'modal' => $modal,
+                'jasa' => $jasa,
+                'shuModal' => $shuModalAnggota,
+                'shuJasa' => $shuJasaAnggota,
+                'shuDiterima' => $shuDiterima
+            ];
+        }
+        $data = [
+            'tahun' => $tahun,
+            'shu' => $data,
+            'totalModal' => $totalModal,
+            'totalJasa' => $totalJasa,
+            'totalBeban' => $totalBeban,
+            'shuDibagi' => $shuDibagi,
+            'persenModal' => $persenModal,
+            'persenJasa' => $persenJasa,
+        ];
+        return view('admin/shu', $data);
     }
 }

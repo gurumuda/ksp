@@ -338,16 +338,17 @@ $("#dataAnggotaKoperasi").on("change", function () {
     dataType: "json",
     data: { anggota_id },
     success: function (data) {
-      console.log(data);
+      // console.log(data);
       $("#tampil-data-anggota").show();
       $("#tampil-nama").html(data["dataAnggota"].nama);
       $("#tampil-no_hp").html(data["dataAnggota"].no_hp);
       $("#tampil-alamat").html(data["dataAnggota"].alamat);
       $("#data_pinjaman").html(data["html"]);
       $("#tampil_transaksi").html(data["html2"]);
+      $("#wajib").html(data["html3"]);
     },
     error: function (e) {
-      console.log(e);
+      // console.log(e);
     },
   });
 });

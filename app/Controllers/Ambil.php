@@ -243,11 +243,29 @@ class Ambil extends BaseController
             <button type="submit" class="btn btn-success">Simpan Data Transaksi</button>
         </div>';
 
+        $rutin = $this->transaksi
+            ->select('transaksi.trx_bulan')
+            ->join('jenistransaksi', 'jenistransaksi.jenistransaksi_id = transaksi.jenistransaksi_id')
+            ->where('transaksi.anggota_id', $anggota_id)
+            ->where('transaksi.jenis_trx', 1)
+            ->where('transaksi.trx_tahun', $this->koperasi->first()->tahun)
+            ->like('nama_trx', 'wajib')
+            ->orderBy('trx_bulan', 'ASC')
+            ->findAll();
+        $b = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        $wajibSudah = [];
+        foreach ($rutin as $a) {
+            if (in_array($a->trx_bulan, $b)) {
+                $wajibSudah[] = $a->trx_bulan . ', ';
+            }
+        }
+        $html3 = $wajibSudah;
         $result = [
             'dataAnggota' => $dataAnggota,
             'statusPinjaman' => $statusPinjaman,
             'html' => $html,
             'html2' => $html2,
+            'html3' => $html3,
             'blm' => $blmLunas
         ];
 

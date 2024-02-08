@@ -32,48 +32,85 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="nama">Nama Koperasi</label>
-                                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama koperasi" value="<?= $koperasi->nama; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="no">Nomor Badan Hukum</label>
-                                    <input type="text" class="form-control" name="no" id="no" placeholder="Masukkan no SIUP" value="<?= $koperasi->no; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="alamat">Alamat Kantor</label>
-                                    <textarea name="alamat" id="alamat" rows="5" class="form-control"><?= $koperasi->alamat; ?></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="kas">Kas (Rp.)</label>
-                                    <input type="number" class="form-control" name="kas" id="kas" placeholder="Nominal kas per input data" value="<?= $koperasi->kas; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="logo">Logo</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="logo" id="logo" />
-                                            <label class="custom-file-label" for="logo">Choose file</label>
-                                        </div>
+                        <?= form_open('/ubah/koperasi'); ?>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="nama">Nama Koperasi</label>
+                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama koperasi" value="<?= $koperasi->nama; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="no">Nomor Badan Hukum</label>
+                                <input type="text" class="form-control" name="no" id="no" placeholder="Masukkan no SIUP" value="<?= $koperasi->no; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="alamat">Alamat Kantor</label>
+                                <textarea name="alamat" id="alamat" rows="5" class="form-control"><?= $koperasi->alamat; ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="tahun">Tahun Anggaran</label>
+                                <input type="number" class="form-control" name="tahun" id="tahun" placeholder="Masukkan tahun anggaran" value="<?= $koperasi->tahun; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="kas">Kas Awal (Rp.)</label>
+                                <input type="number" class="form-control" name="kas" id="kas" placeholder="Nominal kas per input data" value="<?= $koperasi->kas; ?>" />
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="logo">Logo</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="logo" id="logo" />
+                                        <label class="custom-file-label" for="logo">Choose file</label>
                                     </div>
                                 </div>
+                            </div> -->
+                        </div>
+                        <!-- /.card-body -->
 
-                            </div>
-                            <!-- /.card-body -->
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">
-                                    Simpan
-                                </button>
-                            </div>
-                        </form>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                Simpan
+                            </button>
+                        </div>
+                        <?= form_close(); ?>
                     </div>
                     <!-- /.card -->
 
                 </div>
                 <!--/.col (left) -->
+
+                <!-- right column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Persentase SHU</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <?= form_open('/ubah/persen_shu'); ?>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="shu_modal">SHU Modal (%)</label>
+                                <input type="number" class="form-control" name="shu_modal" id="shu_modal" placeholder="Masukkan persentase modal" value="<?= $koperasi->shu_modal; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="shu_jasa">SHU Jasa (%)</label>
+                                <input type="number" class="form-control" name="shu_jasa" id="shu_jasa" placeholder="Masukkan persentase jasa" value="<?= $koperasi->shu_jasa; ?>" />
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                Simpan
+                            </button>
+                        </div>
+                        <?= form_close(); ?>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <!--/.col (right) -->
 
             </div>
             <!-- /.row -->

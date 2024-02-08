@@ -221,8 +221,8 @@ $submenu = $uri->getSegment(2);
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item <?= ($submenu == 'bku' || $submenu == 'bkbesar') ? 'menu-open' : ''; ?>">
-                            <a href="#" class="nav-link <?= ($submenu == 'bku' || $submenu == 'bkbesar') ? 'active' : ''; ?>">
+                        <li class="nav-item <?= ($submenu == 'bku' || $submenu == 'shu') ? 'menu-open' : ''; ?>">
+                            <a href="#" class="nav-link <?= ($submenu == 'bku' || $submenu == 'shu') ? 'active' : ''; ?>">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Laporan
@@ -236,7 +236,12 @@ $submenu = $uri->getSegment(2);
                                         <p>BKU</p>
                                     </a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a href="/admin/shu" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>SHU Anggota</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
